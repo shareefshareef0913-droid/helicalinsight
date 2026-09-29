@@ -94,6 +94,12 @@ export const getDatasourceGetContentsResponse = (formData) => {
         {
           available: "true",
           driver: "com.helical.mongodb.MongoJdbcDriver",
+          url: "mongodb://{{hostName}}:{{port}}/{{database}}",
+          parameters: {
+            port: "27017",
+            hostName: "localhost",
+            database: "test",
+          },
         },
         {
           url: "jdbc:hive2://{{hostName}}:{{port}}/{{database}}",
@@ -427,12 +433,18 @@ export const getDatasourceGetContentsResponse = (formData) => {
           driver: "com.helical.mongodb.MongoJdbcDriver",
           databaseDialect: "himongo",
           name: "Helical Mongodb",
-          categoryName: "RDBMS",
-          categoryType: "rdbms",
+          categoryName: "NoSQL",
+          categoryType: "nosql",
           type: "global.jdbc",
           dataSourceProvider: "tomcat",
           classifier: "global",
-          imgUrl: "../images/data_sources/defaut_datasource.png",
+          imgUrl: "../images/data_sources/mongodb_datasource.png",
+          url: "mongodb://{{hostName}}:{{port}}/{{database}}",
+          parameters: {
+            port: "27017",
+            hostName: "localhost",
+            database: "test",
+          },
         },
         {
           driver: "org.sqlite.JDBC",

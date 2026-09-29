@@ -67,12 +67,18 @@ public class MongoConnectionFactory extends DatabaseConnectionFactory {
 				driverClassName = connectionDetails.get("driverName").getAsString();
 			}
 
-			if ("mongodb.jdbc.MongoDriver".equalsIgnoreCase(driverClassName)) {
-				DriverConnection driverConnection = new DriverConnection();
-				driverConnection.setConnection(null);
-				driverConnection.setDriverClass("mongodb.jdbc.MongoDriver");
-				return driverConnection;
-
+			if ("mongodb.jdbc.MongoDriver".equalsIgnoreCase(driverClassName) || "com.helical.mongodb.MongoJdbcDriver".equalsIgnoreCase(driverClassName)) {
+				try {
+					DriverConnection driverConnection = super.getConnection(type, jsonInfo);
+					if (driverConnection != null && driverConnection.getConnection() != null) {
+						return driverConnection;
+					}
+				} catch (Exception e) {
+					DriverConnection driverConnection = new DriverConnection();
+					driverConnection.setConnection(null);
+					driverConnection.setDriverClass(driverClassName != null ? driverClassName : "com.helical.mongodb.MongoJdbcDriver");
+					return driverConnection;
+				}
 			}
 			if (driverClassName != null && driverClassName.startsWith(JsonUtils.getHiMiddleWareName())) {
 				formJson.addProperty("id", "-1");
